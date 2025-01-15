@@ -1,0 +1,25 @@
+{% extends "admin/base.html" %}
+{% load static %}
+
+{% block branding %}
+<a class="navbar-brand" href="{% url 'admin:index' %}">
+    <img src="{% static 'bidgen-logo.svg' %}" alt="Logo" style="height: 30px;">
+    Fotheby’s Auction
+</a>
+{% endblock %}
+
+{% block navbar %}
+<ul class="navbar-nav ml-auto">
+    <!-- Language Dropdown -->
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="languageDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Language
+        </a>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="languageDropdown">
+            <a class="dropdown-item" href="{% url 'set_language' %}?language=en">English</a>
+            <a class="dropdown-item" href="{% url 'set_language' %}?language=ru">Russian</a>
+            <a class="dropdown-item" href="{% url 'set_language' %}?language=uz">Uzbek</a>
+        </div>
+    </li>
+</ul>
+{% endblock %}
