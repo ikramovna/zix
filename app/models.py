@@ -4,6 +4,7 @@ from django.db.models import Model
 from django.utils.translation import gettext as _
 from parler.models import TranslatableModel, TranslatedFields
 
+
 class Contact(Model):
     name = models.CharField(max_length=255)
     email = models.EmailField()
@@ -17,6 +18,23 @@ class Contact(Model):
 
     def __str__(self):
         return self.name
+
+
+class About(TranslatableModel):
+    translations = TranslatedFields(
+        title=models.CharField(max_length=255),
+        description=RichTextField(blank=True, null=True),
+    )
+    image = models.ImageField(upload_to='about/', null=True, blank=True)
+
+    class Meta:
+        verbose_name = _("About")
+        verbose_name_plural = _("Abouts")
+        db_table = 'about'
+
+    def __str__(self):
+        return self.safe_translation_getter('title', any_language=True)
+
 
 class Category(TranslatableModel):
     translations = TranslatedFields(
@@ -32,6 +50,7 @@ class Category(TranslatableModel):
     def __str__(self):
         return self.safe_translation_getter('name', any_language=True)
 
+
 class Product(TranslatableModel):
     translations = TranslatedFields(
         name=models.CharField(max_length=255),
@@ -39,6 +58,7 @@ class Product(TranslatableModel):
         features=RichTextField(blank=True, null=True),
     )
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    quantity = models.IntegerField()
     image1 = models.ImageField(upload_to='product/', null=True, blank=True)
     image2 = models.ImageField(upload_to='product/', null=True, blank=True)
     image3 = models.ImageField(upload_to='product/', null=True, blank=True)
@@ -52,5 +72,3 @@ class Product(TranslatableModel):
 
     def __str__(self):
         return self.safe_translation_getter('name', any_language=True)
-
-

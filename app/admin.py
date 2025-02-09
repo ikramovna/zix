@@ -18,6 +18,20 @@ class ContactAdmin(admin.ModelAdmin):
 
 admin.site.register(Contact, ContactAdmin)
 
+class AboutAdmin(ImportExportModelAdmin, TranslatableAdmin):
+    list_display = ('id', 'title')
+    fieldsets = (
+        (None, {
+            'fields': ('title', 'description', 'image')
+        }),
+    )
+    search_fields = ('translations__title', 'translations__description')
+    ordering = ('id',)
+    readonly_fields = ('id',)
+    list_per_page = 10
+
+admin.site.register(About, AboutAdmin)
+
 class CategoryAdmin(ImportExportModelAdmin, TranslatableAdmin):
     list_display = ('id', 'name')
     fieldsets = (
@@ -31,3 +45,18 @@ class CategoryAdmin(ImportExportModelAdmin, TranslatableAdmin):
     list_per_page = 10
 
 admin.site.register(Category, CategoryAdmin)
+
+
+class ProductAdmin(ImportExportModelAdmin, TranslatableAdmin):
+    list_display = ('id', 'name', 'category', 'quantity', 'price')
+    fieldsets = (
+        (None, {
+            'fields': ('name', 'description', 'features', 'category', 'quantity', 'price', 'image1', 'image2', 'image3', 'image4')
+        }),
+    )
+    search_fields = ('translations__name', 'translations__description', 'translations__features', 'category__translations__name')
+    ordering = ('id',)
+    readonly_fields = ('id',)
+    list_per_page = 10
+
+admin.site.register(Product, ProductAdmin)

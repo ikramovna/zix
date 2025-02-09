@@ -1,38 +1,421 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
-#, fuzzy
+# Uzbek Translations for Django Admin
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-14 21:14+0500\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: uz\n"
-"MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"Language: uz\n"
 
-#: app/models.py:13
-msgid "Contact"
-msgstr "Xabar"
+msgid "Delete selected %(verbose_name_plural)s"
+msgstr "%(verbose_name_plural)slarni o'chirish"
 
-#: app/models.py:14
-msgid "Contacts"
-msgstr "Xabarlar"
+msgid "Successfully deleted %(count)d %(items)s."
+msgstr "%(count)d%(items)s muvaffaqiyatli o'chirildi."
 
-#: app/models.py:27
-msgid "Category"
-msgstr "Turkum"
+msgid "Cannot delete %(name)s"
+msgstr "%(name)s o'chirib bo'lmadi."
 
-#: app/models.py:28
+msgid "Are you sure?"
+msgstr "Ishonchingiz komilmi?"
+
+msgid "Administration"
+msgstr "Administratsiya"
+
+msgid "All"
+msgstr "Barchasi"
+
+msgid "Yes"
+msgstr "Ha"
+
+msgid "No"
+msgstr "Yo'q"
+
+msgid "Unknown"
+msgstr "Noma'lum"
+
+msgid "Any date"
+msgstr "Istalgan kun"
+
+msgid "Today"
+msgstr "Bugun"
+
+msgid "Past 7 days"
+msgstr "O'tgan 7 kun"
+
+msgid "This month"
+msgstr "Shu oyda"
+
+msgid "This year"
+msgstr "Shu yilda"
+
+msgid "No date"
+msgstr "Sanasi yo'q"
+
+msgid "Has date"
+msgstr "Sanasi bor"
+
+msgid "Empty"
+msgstr "Bo'sh"
+
+msgid "Not empty"
+msgstr "Bo'sh emas"
+
+msgid "Please enter the correct %(username)s and password for a staff account. Note that both fields may be case-sensitive."
+msgstr "Xodimlar akkaunti uchun to'g'ri %(username)s va parolni kiriting. E'tibor bering, har ikkala maydon ham harf katta-kichikligini hisobga olishi mumkin."
+
+msgid "Action"
+msgstr "Harakat"
+
+msgid "Add another %(verbose_name)s"
+msgstr "Boshqa %(verbose_name)s qo'shish"
+
+msgid "Remove"
+msgstr "O'chirish"
+
+msgid "Addition"
+msgstr "Qo'shish"
+
+msgid "Change"
+msgstr "O'zgartirish"
+
+msgid "Deletion"
+msgstr "O'chirish"
+
+msgid "action time"
+msgstr "harakat vaqti"
+
+msgid "user"
+msgstr "foydalanuvchi"
+
+msgid "content type"
+msgstr "tarkib turi"
+
+msgid "object id"
+msgstr "obyekt identifikatori"
+
+msgid "object repr"
+msgstr "obyekt taqdimoti"
+
+msgid "log entry"
+msgstr "jurnal yozuvi"
+
+msgid "log entries"
+msgstr "jurnal yozuvlari"
+
+msgid "Added %(objects)s."
+msgstr "%(objects)s qo'shildi."
+
+msgid "Changed %(objects)s — %(changes)s"
+msgstr "%(objects)s dan %(changes)sga o'zgartirildi."
+
+msgid "Deleted %(objects)s."
+msgstr "%(objects)s o'chirildi."
+
+msgid "No fields changed."
+msgstr "Hech qanday maydon o'zgartirilmadi."
+
+msgid "Hold down “Control”, or “Command” on a Mac, to select more than one."
+msgstr "Bir nechta tanlash uchun Mac-da “Control” yoki “Buyruq” tugmasini bosing."
+
+msgid "Select this object for an action - {}"
+msgstr "Amal qilish uchun ushbu obyektni tanlang - {}"
+
+msgid "The %(name)s “%(obj)s” was added successfully."
+msgstr "%(name)s “%(obj)s” muvaffaqiyatli qo'shildi."
+
+msgid "The %(name)s “%(obj)s” was changed successfully."
+msgstr "%(name)s “%(obj)s” muvaffaqiyatli o'zgartirildi."
+
+msgid "The %(name)s “%(obj)s” was deleted successfully."
+msgstr "%(name)s “%(obj)s” muvaffaqiyatli o'chirildi."
+
+msgid "Add %s"
+msgstr "Qo'shish %s"
+
+msgid "Change %s"
+msgstr "%s ni o'zgartirish"
+
+msgid "View %s"
+msgstr "Ko'rish %s"
+
+msgid "Database error"
+msgstr "Ma'lumotlar bazasi xatoligi yuz berdi"
+
+msgid "%(count)s %(name)s were changed successfully."
+msgstr "%(count)s %(name)s muvaffaqiyatli o'zgartirildi."
+
+msgid "All %(total_count)s selected"
+msgstr "Barcha %(total_count)s tanlandi"
+
+msgid "0 of %(cnt)s selected"
+msgstr "0/%(cnt)s tanlandi"
+
+msgid "Change history: %s"
+msgstr "O'zgartirish tarixi: %s"
+
+msgid "Django administration"
+msgstr "Django ma'muriyati"
+
+msgid "Site administration"
+msgstr "Sayt ma'muriyati"
+
+msgid "Log in"
+msgstr "Tizimga kirish"
+
+msgid "%(app)s administration"
+msgstr "%(app)s boshqaruvi"
+
+msgid "Page not found"
+msgstr "Sahifa topilmadi"
+
+msgid "We're sorry, but the requested page could not be found."
+msgstr "Kechirasiz, lekin so'ralgan sahifa topilmadi."
+
+msgid "Home"
+msgstr "Uy"
+
+msgid "Server error"
+msgstr "Server xatoligi"
+
+msgid "Server error (500)"
+msgstr "Server xatoligi (500)"
+
+msgid "Server Error <em>(500)</em>"
+msgstr "Server Xatoligi <em>(500)</em>"
+
+msgid "Run the selected action"
+msgstr "Tanlangan faoliyatni ishga tushirish"
+
+msgid "Go"
+msgstr "Bor"
+
+msgid "Click here to select the objects across all pages"
+msgstr "Barcha sahifalar bo'ylab ob'ektlarni tanlash uchun shu yerga bosing"
+
+msgid "Select all %(total_count)s %(module_name)s"
+msgstr "Barcha %(total_count)s %(module_name)s ni tanlang"
+
+msgid "Clear selection"
+msgstr "Tanlovni tozalash"
+
+msgid "Breadcrumbs"
+msgstr "Non bo'laklari"
+
+msgid "Models in the %(name)s application"
+msgstr "%(name)s ilovasidagi modellar"
+
+msgid "Add"
+msgstr "Qo'shish"
+
+msgid "View"
+msgstr "Ko'rish"
+
+msgid "You don't have permission to view or edit anything."
+msgstr "Sizda biror narsani ko'rish yoki tahrirlash uchun ruxsatingiz yo'q."
+
+msgid "First, enter a username and password. Then, you'll be able to edit more user options."
+msgstr "Birinchidan, foydalanuvchi nomi va parolni kiriting. Keyin siz ko'proq foydalanuvchi parametrlari tahrirlashingiz mumkin bo'ladi."
+
+msgid "Enter a username and password."
+msgstr "Username va parolni kiriting"
+
+msgid "Change password"
+msgstr "Parolni o'zgartirish"
+
+msgid "Please correct the errors below."
+msgstr "Quyidagi xatoni tuzating. Iltimos, quyidagi xatolarni tuzating."
+
+msgid "Enter a new password for the user <strong>%(username)s </strong>."
+msgstr "<strong>%(username)s</strong> foydalanuvchi uchun yangi parolni kiriting."
+
+msgid "Skip to main content"
+msgstr "Asosiy tarkibga o'tish"
+
+msgid "Welcome,"
+msgstr "Xush kelibsiz,"
+
+msgid "View site"
+msgstr "Saytni ko'rish"
+
+msgid "Documentation"
+msgstr "Qo'llanma"
+
+msgid "Log out"
+msgstr "Chiqish"
+
+msgid "Add %(name)s"
+msgstr "%(name)s qo'shish"
+
+msgid "History"
+msgstr "Tarix"
+
+msgid "View on site"
+msgstr "Saytda ko'rish"
+
+msgid "Filter"
+msgstr "Saralash"
+
+msgid "Hide counts"
+msgstr "Hisoblarni yashirish"
+
+msgid "Show counts"
+msgstr "Hisoblarni ko'rsatish"
+
+msgid "Clear all filters"
+msgstr "Barcha filtrlni tozalang"
+
+msgid "Remove from sorting"
+msgstr "Tartiblashtdan chiqarish"
+
+msgid "Toggle sorting"
+msgstr "Saralashni almashtirish"
+
+msgid "Delete"
+msgstr "O'chirish"
+
+msgid "Objects"
+msgstr "Ob'ektlar"
+
+msgid "Yes, I’m sure"
+msgstr "Ha, ishonchim komil"
+
+msgid "Summary"
+msgstr "Xulosa"
+
+msgid "Recent actions"
+msgstr "So'nggi harakatlar"
+
+msgid "My actions"
+msgstr "Mening harakatlarim"
+
+msgid "None available"
+msgstr "Hech biri mavjud emas"
+
+msgid "Added:"
+msgstr "Qo'shilgan:"
+
+msgid "Changed:"
+msgstr "O'zgartirildi:"
+
+msgid "Deleted:"
+msgstr "O'chirildi:"
+
+msgid "Unknown content"
+msgstr "Noma'lum tarkib"
+
+msgid "Toggle navigation"
+msgstr "Navigatsiyani almashtirish"
+
+msgid "Sidebar"
+msgstr "Yon panel"
+
+msgid "Enter a username and password."
+msgstr "Foydalanuvchi nomi va parolni kiriting."
+
+msgid "Change password"
+msgstr "Parolni o'zgartirish"
+
+msgid "View site"
+msgstr "Saytni ko'rish"
+
+msgid "Documentation"
+msgstr "Qo'llanma"
+
+msgid "Welcome,"
+msgstr "Xush kelibsiz,"
+
+msgid "Dashboard"
+msgstr "Boshqaruv paneli"
+
+msgid "Groups"
+msgstr "Guruhlar"
+
+msgid "Users"
+msgstr "Foydalanuvchilar"
+
+msgid "Add user"
+msgstr "Foydalanuvchi qo'shish"
+
+msgid "Add group"
+msgstr "Guruh qo'shish"
+
+msgid "Recent actions"
+msgstr "So'nggi harakatlar"
+
+msgid "My actions"
+msgstr "Mening harakatlarim"
+
+msgid "Abouts"
+msgstr "Haqida"
+
 msgid "Categories"
-msgstr "Turkumlar"
+msgstr "Kategoriyalar"
 
-#~ msgid "Dashboard"
-#~ msgstr "Boshqaruv paneli"
+msgid "Contacts"
+msgstr "Aloqa"
+
+msgid "Products"
+msgstr "Mahsulotlar"
+
+msgid "Services"
+msgstr "Xizmatlar"
+
+msgid "Settings"
+msgstr "Sozlamalar"
+
+msgid "Import"
+msgstr "Import"
+
+msgid "Export"
+msgstr "Export"
+
+msgid "Apps"
+msgstr "Ilovilar"
+
+msgid "App"
+msgstr "Ilova"
+
+msgid "Model"
+msgstr "Model"
+
+msgid "Field"
+msgstr "Maydon"
+
+msgid "Permission"
+msgstr "Ruxsat"
+
+msgid "Group"
+msgstr "Guruh"
+
+msgid "User"
+msgstr "Foydalanuvchi"
+
+msgid "Log entry"
+msgstr "Jurnal yozuvi"
+
+msgid "Log entries"
+msgstr "Jurnal yozuvlari"
+
+msgid "Add %s"
+msgstr "%s qo'shish"
+
+msgid "Change %s"
+msgstr "%s o'zgartirish"
+
+msgid "Delete %s"
+msgstr "%s o'chirish"
+
+msgid "Are you sure?"
+msgstr "Ishonchingiz komilmi?"
+
+msgid "Yes, I'm sure"
+msgstr "Ha, ishonchim komil"
+
+msgid "No, take me back"
+msgstr "Yo'q, meni qaytar"
+
+msgid "View on site"
+msgstr "Saytda ko'rish"
+
+msgid "Home"
+msgstr "Uy"
+
+

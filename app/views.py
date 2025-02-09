@@ -2,7 +2,7 @@ from django.conf import settings
 from django.core.mail import send_mail
 from django.utils.translation import get_language
 from rest_framework import status
-from rest_framework.generics import ListAPIView, CreateAPIView
+from rest_framework.generics import ListAPIView, CreateAPIView, RetrieveAPIView
 from rest_framework.response import Response
 from django.template.loader import render_to_string
 
@@ -36,6 +36,15 @@ class ContactCreateAPIView(CreateAPIView):
         }, status=status.HTTP_201_CREATED)
 
 
+class AboutListAPIView(ListAPIView):
+    queryset = About.objects.all()
+    serializer_class = AboutTranslatableModelSerializer
+
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context['language_code'] = self.kwargs.get('language_prefix', get_language())
+        return context
+
 
 class CategoryListAPIView(ListAPIView):
     queryset = Category.objects.all()
@@ -46,9 +55,20 @@ class CategoryListAPIView(ListAPIView):
         context['language_code'] = self.kwargs.get('language_prefix', get_language())
         return context
 
-class ProductListAPIView(ListAPIView):
+
+class ProductListAPIView(RetrieveAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductTranslatableModelSerializer
+
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context['language_code'] = self.kwargs.get('language_prefix', get_language())
+        return context
+
+
+class ProductListView(ListAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductListTranslatableModelSerializer
 
     def get_serializer_context(self):
         context = super().get_serializer_context()
