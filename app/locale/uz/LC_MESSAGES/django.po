@@ -307,21 +307,6 @@ msgstr "Navigatsiyani almashtirish"
 msgid "Sidebar"
 msgstr "Yon panel"
 
-msgid "Enter a username and password."
-msgstr "Foydalanuvchi nomi va parolni kiriting."
-
-msgid "Change password"
-msgstr "Parolni o'zgartirish"
-
-msgid "View site"
-msgstr "Saytni ko'rish"
-
-msgid "Documentation"
-msgstr "Qo'llanma"
-
-msgid "Welcome,"
-msgstr "Xush kelibsiz,"
-
 msgid "Dashboard"
 msgstr "Boshqaruv paneli"
 
@@ -336,12 +321,6 @@ msgstr "Foydalanuvchi qo'shish"
 
 msgid "Add group"
 msgstr "Guruh qo'shish"
-
-msgid "Recent actions"
-msgstr "So'nggi harakatlar"
-
-msgid "My actions"
-msgstr "Mening harakatlarim"
 
 msgid "Abouts"
 msgstr "Haqida"
@@ -382,26 +361,14 @@ msgstr "Maydon"
 msgid "Permission"
 msgstr "Ruxsat"
 
-msgid "Group"
-msgstr "Guruh"
-
-msgid "User"
-msgstr "Foydalanuvchi"
+msgid "Permissions"
+msgstr "Ruxsatlar"
 
 msgid "Log entry"
 msgstr "Jurnal yozuvi"
 
 msgid "Log entries"
 msgstr "Jurnal yozuvlari"
-
-msgid "Add %s"
-msgstr "%s qo'shish"
-
-msgid "Change %s"
-msgstr "%s o'zgartirish"
-
-msgid "Delete %s"
-msgstr "%s o'chirish"
 
 msgid "Are you sure?"
 msgstr "Ishonchingiz komilmi?"
@@ -414,8 +381,4 @@ msgstr "Yo'q, meni qaytar"
 
 msgid "View on site"
 msgstr "Saytda ko'rish"
-
-msgid "Home"
-msgstr "Uy"
-
 

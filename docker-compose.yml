@@ -15,7 +15,7 @@ services:
     image: postgres:14.0-alpine
     container_name: postgres_db
     environment:
-      - POSTGRES_DB=uzinterfax
+      - POSTGRES_DB=zix
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=1
     volumes:
@@ -24,7 +24,7 @@ services:
     build: ./nginx
     container_name: nginx
     ports:
-      - "80:80"
+      - "8080:80"
     volumes:
       - static_volume:/app/static
     depends_on:
