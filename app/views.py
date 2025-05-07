@@ -16,7 +16,7 @@ class ContactCreateAPIView(CreateAPIView):
 
     def perform_create(self, serializer):
         contact = serializer.save()
-        # Build the email message body
+
         email_body = (
             f"New Contact Form Submission:\n\n"
             f"Name: {contact.name}\n"
@@ -39,9 +39,8 @@ class ContactCreateAPIView(CreateAPIView):
                 fail_silently=False
             )
             self.email_sent = True
-        except BadHeaderError:
-            print("Invalid header found.")
         except Exception as e:
+            # Log the error, but DO NOT crash the API
             print(f"Failed to send email: {e}")
 
     def create(self, request, *args, **kwargs):
