@@ -1,5 +1,5 @@
 from django.conf import settings
-from django.core.mail import send_mail
+from django.core.mail import send_mail, BadHeaderError
 from django.utils.translation import get_language
 from rest_framework import status
 from rest_framework.generics import ListAPIView, CreateAPIView, RetrieveAPIView
@@ -16,22 +16,26 @@ class ContactCreateAPIView(CreateAPIView):
 
     def perform_create(self, serializer):
         contact = serializer.save()
-
         email_message = render_to_string('contact_form.html', {'contact': contact})
         subject = "New Contact Form Submission"
         from_email = settings.EMAIL_HOST_USER
         recipient_list = ["muslimazokirjonova2004@gmail.com"]
 
         try:
-            send_mail(subject, email_message, from_email, recipient_list, fail_silently=False,
-                      html_message=email_message)
+            send_mail(subject, email_message, from_email, recipient_list, fail_silently=False, html_message=email_message)
+            self.email_sent = True
+        except BadHeaderError:
+            self.email_sent = False
+            print("Invalid header found.")
         except Exception as e:
-            raise Exception(f"Failed to send email: {str(e)}")
+            self.email_sent = False
+            print(f"Failed to send email: {e}")
 
     def create(self, request, *args, **kwargs):
         response = super().create(request, *args, **kwargs)
         return Response({
-            "message": "Contact saved and email sent successfully.",
+            "message": "Contact saved successfully.",
+            "email_sent": getattr(self, 'email_sent', False),
             "data": response.data
         }, status=status.HTTP_201_CREATED)
 
