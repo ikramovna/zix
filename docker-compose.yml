@@ -1,4 +1,5 @@
 version: "3.9"
+
 services:
   django:
     build: .
@@ -11,6 +12,7 @@ services:
       - static_volume:/app/static
     depends_on:
       - db
+
   db:
     image: postgres:14.0-alpine
     container_name: postgres_db
@@ -20,17 +22,17 @@ services:
       - POSTGRES_PASSWORD=1
     volumes:
       - postgres_data:/var/lib/postgresql/data
+
   nginx:
     build: ./nginx
     container_name: nginx
     ports:
-      - "8080:80"
+      - "80:80"
     volumes:
       - static_volume:/app/static
     depends_on:
       - django
+
 volumes:
   postgres_data:
   static_volume:
-
-
