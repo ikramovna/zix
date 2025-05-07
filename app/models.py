@@ -72,3 +72,14 @@ class Product(TranslatableModel):
 
     def __str__(self):
         return self.safe_translation_getter('name', any_language=True)
+
+class Faq(TranslatableModel):
+    translations = TranslatedFields(
+        question=models.CharField(max_length=255),
+        answer=models.TextField(blank=True, null=True),
+    )
+
+    class Meta:
+        verbose_name = _("FAQ")
+        verbose_name_plural = _("FAQs")
+        db_table = 'faq'

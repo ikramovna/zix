@@ -16,19 +16,32 @@ class ContactCreateAPIView(CreateAPIView):
 
     def perform_create(self, serializer):
         contact = serializer.save()
-        email_message = render_to_string('contact_form.html', {'contact': contact})
+        # Build the email message body
+        email_body = (
+            f"New Contact Form Submission:\n\n"
+            f"Name: {contact.name}\n"
+            f"Email: {contact.email}\n"
+            f"Country: {contact.country}\n"
+            f"Message: {contact.message}"
+        )
         subject = "New Contact Form Submission"
         from_email = settings.EMAIL_HOST_USER
         recipient_list = ["muslimazokirjonova2004@gmail.com"]
 
+        self.email_sent = False
+
         try:
-            send_mail(subject, email_message, from_email, recipient_list, fail_silently=False, html_message=email_message)
+            send_mail(
+                subject,
+                email_body,
+                from_email,
+                recipient_list,
+                fail_silently=False
+            )
             self.email_sent = True
         except BadHeaderError:
-            self.email_sent = False
             print("Invalid header found.")
         except Exception as e:
-            self.email_sent = False
             print(f"Failed to send email: {e}")
 
     def create(self, request, *args, **kwargs):
@@ -73,6 +86,16 @@ class ProductListAPIView(RetrieveAPIView):
 class ProductListView(ListAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductListTranslatableModelSerializer
+
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context['language_code'] = self.kwargs.get('language_prefix', get_language())
+        return context
+
+
+class FaqListAPIView(ListAPIView):
+    queryset = Faq.objects.all()
+    serializer_class = FaqTranslatableModelSerializer
 
     def get_serializer_context(self):
         context = super().get_serializer_context()

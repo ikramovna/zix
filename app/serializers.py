@@ -87,3 +87,20 @@ class ProductListTranslatableModelSerializer(TranslatableModelSerializer):
             "description": representation.get("description"),
             "image1": representation.get("image1"),
         }
+
+class FaqTranslatableModelSerializer(TranslatableModelSerializer):
+    translations = TranslatedFieldsField(shared_model=Faq)
+
+    class Meta:
+        model = Faq
+        fields = ('id', 'translations')
+
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        language_code = self.context.get('language_code')
+        if language_code and 'translations' in representation:
+            representation['translations'] = {
+                language_code: representation['translations'].get(language_code)
+            }
+        return representation
+
