@@ -29,5 +29,14 @@ RUN python manage.py collectstatic --noinput
 # Expose port
 EXPOSE 8000
 
+# Copy the entrypoint script
+COPY entrypoint.sh /entrypoint.sh
+
+# Make the script executable
+RUN chmod +x /entrypoint.sh
+
+# Set the entrypoint
+ENTRYPOINT ["/entrypoint.sh"]
+
 # Run the application
 CMD ["gunicorn", "--bind", "0.0.0.0:8000", "root.wsgi:application"]
