@@ -38,7 +38,7 @@ class About(TranslatableModel):
 
 class Category(Model):
     name = models.CharField(max_length=255)
-    image = models.ImageField(upload_to='category/', null=True, blank=True)
+    image = models.ImageField(upload_to='category/', null=True, blank=True, default="category/default.png")
 
     class Meta:
         verbose_name = _("Category")
