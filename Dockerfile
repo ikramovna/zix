@@ -8,19 +8,19 @@ ENV PYTHONUNBUFFERED 1
 # Set the working directory
 WORKDIR /app
 
-# Install system dependencies (important for psycopg2, Pillow, etc.)
+# Install system dependencies (for psycopg2, Pillow, etc.)
 RUN apt-get update \
     && apt-get install -y gcc python3-dev musl-dev libpq-dev \
     && apt-get clean
 
-# Install Python dependencies
+# Copy and install Python dependencies
 COPY requirements.txt /app/
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Install gunicorn
 RUN pip install gunicorn
 
-# Copy project files
+# Copy the entire Django project
 COPY . /app/
 
 # Collect static files
@@ -29,14 +29,10 @@ RUN python manage.py collectstatic --noinput
 # Expose port
 EXPOSE 8000
 
-# Copy the entrypoint script
+# ✅ Copy and set up entrypoint script
 COPY entrypoint.sh /entrypoint.sh
-
-# Make the script executable
 RUN chmod +x /entrypoint.sh
-
-# Set the entrypoint
 ENTRYPOINT ["/entrypoint.sh"]
 
-# Run the application
+# Run the Gunicorn server
 CMD ["gunicorn", "--bind", "0.0.0.0:8000", "root.wsgi:application"]

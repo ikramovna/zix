@@ -37,7 +37,7 @@ class About(TranslatableModel):
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=255, default='Unnamed Category')
+    name = models.CharField(max_length=255)
     image = models.ImageField(upload_to='category/', null=True, blank=True)
 
     class Meta:
@@ -47,6 +47,7 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
+
 
 
 
