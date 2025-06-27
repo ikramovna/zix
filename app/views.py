@@ -40,7 +40,6 @@ class ContactCreateAPIView(CreateAPIView):
             )
             self.email_sent = True
         except Exception as e:
-            # Log the error, but DO NOT crash the API
             print(f"Failed to send email: {e}")
 
     def create(self, request, *args, **kwargs):
@@ -63,28 +62,28 @@ class AboutListAPIView(ListAPIView):
 
 
 class CategoryListAPIView(ListAPIView):
-    queryset = Category.objects.all()
-    serializer_class = CategoryTranslatableModelSerializer
-
-    def get_serializer_context(self):
-        context = super().get_serializer_context()
-        context['language_code'] = self.kwargs.get('language_prefix', get_language())
-        return context
+    class CategoryListAPIView(ListAPIView):
+        queryset = Category.objects.all()
+        serializer_class = CategorySerializer
 
 
 class ProductListAPIView(RetrieveAPIView):
     queryset = Product.objects.all()
-    serializer_class = ProductTranslatableModelSerializer
+    serializer_class = ProductSerializer
 
-    def get_serializer_context(self):
-        context = super().get_serializer_context()
-        context['language_code'] = self.kwargs.get('language_prefix', get_language())
-        return context
+
 
 
 class ProductListView(ListAPIView):
-    queryset = Product.objects.all()
     serializer_class = ProductListTranslatableModelSerializer
+
+    def get_queryset(self):
+        language_code = self.kwargs.get('language_prefix', get_language())
+        return Product.objects.filter(
+            translations__language_code=language_code,
+            translations__name__isnull=False,
+            translations__description__isnull=False
+        )
 
     def get_serializer_context(self):
         context = super().get_serializer_context()

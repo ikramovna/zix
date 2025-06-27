@@ -36,10 +36,8 @@ class About(TranslatableModel):
         return self.safe_translation_getter('title', any_language=True)
 
 
-class Category(TranslatableModel):
-    translations = TranslatedFields(
-        name=models.CharField(max_length=255),
-    )
+class Category(Model):
+    name = models.CharField(max_length=255)
     image = models.ImageField(upload_to='category/', null=True, blank=True)
 
     class Meta:
@@ -48,8 +46,7 @@ class Category(TranslatableModel):
         db_table = 'category'
 
     def __str__(self):
-        return self.safe_translation_getter('name', any_language=True)
-
+        return str(self.name) if self.name else ''
 
 class Product(TranslatableModel):
     translations = TranslatedFields(
@@ -58,12 +55,10 @@ class Product(TranslatableModel):
         features=RichTextField(blank=True, null=True),
     )
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    quantity = models.IntegerField()
     image1 = models.ImageField(upload_to='product/', null=True, blank=True)
     image2 = models.ImageField(upload_to='product/', null=True, blank=True)
     image3 = models.ImageField(upload_to='product/', null=True, blank=True)
     image4 = models.ImageField(upload_to='product/', null=True, blank=True)
-    price = models.DecimalField(max_digits=10, decimal_places=2)
 
     class Meta:
         verbose_name = _("Product")

@@ -28,45 +28,29 @@ class AboutTranslatableModelSerializer(TranslatableModelSerializer):
         return representation
 
 
-class CategoryTranslatableModelSerializer(TranslatableModelSerializer):
-    translations = TranslatedFieldsField(shared_model=Category)
-
+class CategorySerializer(ModelSerializer):
     class Meta:
         model = Category
-        fields = ('id', 'translations', 'image')
-
-    def to_representation(self, instance):
-        representation = super().to_representation(instance)
-        language_code = self.context.get('language_code')
-        if language_code and 'translations' in representation:
-            representation['translations'] = {
-                language_code: representation['translations'].get(language_code)
-            }
-        return representation
+        fields = ('id', 'name', 'image')
 
 
-class ProductTranslatableModelSerializer(TranslatableModelSerializer):
-    translations = TranslatedFieldsField(shared_model=Product)
-    category = serializers.SerializerMethodField()
+class ProductSerializer(serializers.ModelSerializer):
+    category = serializers.CharField(source='category.name', read_only=True)
 
     class Meta:
         model = Product
-        fields = ('id', 'translations', 'category', 'quantity', 'price', 'image1', 'image2', 'image3', 'image4')
-
-    def get_category(self, obj):
-        language_code = self.context.get('language_code')
-        with override(language_code):
-            return obj.category.safe_translation_getter('name', language_code)
+        fields = ('id', 'name', 'description', 'features', 'category', 'image1', 'image2', 'image3', 'image4')
 
     def to_representation(self, instance):
         representation = super().to_representation(instance)
-        language_code = self.context.get('language_code')
-        if language_code and 'translations' in representation:
-            representation['translations'] = {
-                language_code: representation['translations'].get(language_code)
-            }
+        images = [
+            {"image1": representation.pop('image1')},
+            {"image2": representation.pop('image2')},
+            {"image3": representation.pop('image3')},
+            {"image4": representation.pop('image4')}
+        ]
+        representation['images'] = [img for img in images if list(img.values())[0] is not None]
         return representation
-
 
 class ProductListTranslatableModelSerializer(TranslatableModelSerializer):
     translations = TranslatedFieldsField(shared_model=Product)
@@ -83,10 +67,12 @@ class ProductListTranslatableModelSerializer(TranslatableModelSerializer):
             representation.pop('translations', None)
             representation.update(translated_fields)
         return {
+            "id": representation.get("id"),
             "name": representation.get("name"),
             "description": representation.get("description"),
             "image1": representation.get("image1"),
         }
+
 
 class FaqTranslatableModelSerializer(TranslatableModelSerializer):
     translations = TranslatedFieldsField(shared_model=Faq)
@@ -103,4 +89,3 @@ class FaqTranslatableModelSerializer(TranslatableModelSerializer):
                 language_code: representation['translations'].get(language_code)
             }
         return representation
-

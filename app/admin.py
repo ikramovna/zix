@@ -36,14 +36,14 @@ class AboutAdmin(ImportExportModelAdmin, TranslatableAdmin):
 admin.site.register(About, AboutAdmin)
 
 
-class CategoryAdmin(ImportExportModelAdmin, TranslatableAdmin):
+class CategoryAdmin(ImportExportModelAdmin):
     list_display = ('id', 'name')
     fieldsets = (
         (None, {
             'fields': ('name', 'image')
         }),
     )
-    search_fields = ('translations__name',)
+    search_fields = ('name',)
     ordering = ('id',)
     readonly_fields = ('id',)
     list_per_page = 10
@@ -53,15 +53,15 @@ admin.site.register(Category, CategoryAdmin)
 
 
 class ProductAdmin(ImportExportModelAdmin, TranslatableAdmin):
-    list_display = ('id', 'name', 'category', 'quantity', 'price')
+    list_display = ('id', 'name', 'category')
     fieldsets = (
         (None, {
             'fields': (
-            'name', 'description', 'features', 'category', 'quantity', 'price', 'image1', 'image2', 'image3', 'image4')
+                'name', 'description', 'features', 'category', 'image1', 'image2', 'image3', 'image4')
         }),
     )
     search_fields = (
-    'translations__name', 'translations__description', 'translations__features', 'category__translations__name')
+        'translations__name', 'translations__description', 'translations__features', 'category__translations__name')
     ordering = ('id',)
     readonly_fields = ('id',)
     list_per_page = 10
