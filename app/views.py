@@ -52,8 +52,15 @@ class ContactCreateAPIView(CreateAPIView):
 
 
 class AboutListAPIView(ListAPIView):
-    queryset = About.objects.all()
     serializer_class = AboutTranslatableModelSerializer
+
+    def get_queryset(self):
+        language_code = self.kwargs.get('language_prefix', get_language())
+        return About.objects.filter(
+            translations__language_code=language_code,
+            translations__title__isnull=False,
+            translations__description__isnull=False
+        )
 
     def get_serializer_context(self):
         context = super().get_serializer_context()
@@ -66,12 +73,9 @@ class CategoryListAPIView(ListAPIView):
     serializer_class = CategorySerializer
 
 
-
 class ProductListAPIView(RetrieveAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
-
-
 
 
 class ProductListView(ListAPIView):
@@ -92,8 +96,15 @@ class ProductListView(ListAPIView):
 
 
 class FaqListAPIView(ListAPIView):
-    queryset = Faq.objects.all()
     serializer_class = FaqTranslatableModelSerializer
+
+    def get_queryset(self):
+        language_code = self.kwargs.get('language_prefix', get_language())
+        return Faq.objects.filter(
+            translations__language_code=language_code,
+            translations__question__isnull=False,
+            translations__answer__isnull=False
+        )
 
     def get_serializer_context(self):
         context = super().get_serializer_context()
