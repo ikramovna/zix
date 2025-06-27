@@ -62,9 +62,9 @@ class AboutListAPIView(ListAPIView):
 
 
 class CategoryListAPIView(ListAPIView):
-    class CategoryListAPIView(ListAPIView):
-        queryset = Category.objects.all()
-        serializer_class = CategorySerializer
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+
 
 
 class ProductListAPIView(RetrieveAPIView):

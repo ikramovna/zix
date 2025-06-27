@@ -33,6 +33,12 @@ class CategorySerializer(ModelSerializer):
         model = Category
         fields = ('id', 'name', 'image')
 
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        if representation.get('image') is None:
+            representation.pop('image')
+        return representation
+
 
 class ProductSerializer(serializers.ModelSerializer):
     category = serializers.CharField(source='category.name', read_only=True)

@@ -36,8 +36,8 @@ class About(TranslatableModel):
         return self.safe_translation_getter('title', any_language=True)
 
 
-class Category(Model):
-    name = models.CharField(max_length=255, null=True, blank=True)
+class Category(models.Model):
+    name = models.CharField(max_length=255)
     image = models.ImageField(upload_to='category/', null=True, blank=True)
 
     class Meta:
@@ -46,7 +46,8 @@ class Category(Model):
         db_table = 'category'
 
     def __str__(self):
-        return str(self.name)
+        return self.name
+
 
 class Product(TranslatableModel):
     translations = TranslatedFields(
