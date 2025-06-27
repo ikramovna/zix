@@ -46,7 +46,7 @@ class Category(Model):
         db_table = 'category'
 
     def __str__(self):
-        return str(self.name) if self.name else ''
+        return str(self.name)
 
 class Product(TranslatableModel):
     translations = TranslatedFields(
