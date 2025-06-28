@@ -49,21 +49,21 @@ class ProductSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         representation = super().to_representation(instance)
-        images = [
-            {"image1": representation.pop('image1')},
-            {"image2": representation.pop('image2')},
-            {"image3": representation.pop('image3')},
-            {"image4": representation.pop('image4')}
-        ]
-        representation['images'] = [img for img in images if list(img.values())[0] is not None]
+
+        image_fields = ['image1', 'image2', 'image3', 'image4']
+        images = [representation.pop(field) for field in image_fields if representation.get(field)]
+
+        representation['images'] = images
+
         return representation
 
 class ProductListTranslatableModelSerializer(TranslatableModelSerializer):
     translations = TranslatedFieldsField(shared_model=Product)
+    category = serializers.CharField(source='category.name', read_only=True)
 
     class Meta:
         model = Product
-        fields = ('id', 'translations', 'name', 'description', 'image1')
+        fields = ('id', 'translations', 'name', 'description', 'image1', 'category')
 
     def to_representation(self, instance):
         representation = super().to_representation(instance)
@@ -77,6 +77,7 @@ class ProductListTranslatableModelSerializer(TranslatableModelSerializer):
             "name": representation.get("name"),
             "description": representation.get("description"),
             "image1": representation.get("image1"),
+            "category": representation.get("category"),
         }
 
 
