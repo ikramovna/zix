@@ -78,7 +78,7 @@ class ProductListAPIView(RetrieveAPIView):
     serializer_class = ProductSerializer
 
 
-class ProductListView(ListAPIView):
+class ProductList(ListAPIView):
     serializer_class = ProductListTranslatableModelSerializer
 
     def get_queryset(self):
