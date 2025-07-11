@@ -2,9 +2,34 @@ from ckeditor.fields import RichTextField
 from django.db import models
 from django.db.models import Model
 from django.utils.translation import gettext as _
-from parler.models import TranslatableModel, TranslatedFields
-from django.db import models
 from mptt.models import MPTTModel, TreeForeignKey
+from mptt.querysets import TreeQuerySet
+from parler.managers import TranslatableQuerySet, TranslatableManager
+from parler.models import TranslatableModel, TranslatedFields
+
+class TranslatableTreeQuerySet(TreeQuerySet, TranslatableQuerySet):
+    pass
+
+
+class TranslatableTreeManager(TranslatableManager):
+    _queryset_class = TranslatableTreeQuerySet
+
+
+class SubCategory(MPTTModel, TranslatableModel):
+    translations = TranslatedFields(
+        name=models.CharField(max_length=150)
+    )
+    parent = TreeForeignKey('self', on_delete=models.CASCADE, related_name='children', null=True, blank=True)
+
+    objects = TranslatableTreeManager()
+
+    class Meta:
+        verbose_name = "Category"
+        verbose_name_plural = "Categories"
+
+    def __str__(self):
+        return self.safe_translation_getter('name', any_language=True)
+
 
 class Contact(Model):
     name = models.CharField(max_length=255)
@@ -51,8 +76,6 @@ class Category(models.Model):
         return self.name
 
 
-
-
 class Product(TranslatableModel):
     translations = TranslatedFields(
         name=models.CharField(max_length=255),
@@ -64,6 +87,7 @@ class Product(TranslatableModel):
     image2 = models.ImageField(upload_to='product/', null=True, blank=True)
     image3 = models.ImageField(upload_to='product/', null=True, blank=True)
     image4 = models.ImageField(upload_to='product/', null=True, blank=True)
+    subcategory = models.ForeignKey(SubCategory, on_delete=models.CASCADE, null=True, blank=True)
 
     class Meta:
         verbose_name = _("Product")
@@ -72,6 +96,7 @@ class Product(TranslatableModel):
 
     def __str__(self):
         return self.safe_translation_getter('name', any_language=True)
+
 
 class Faq(TranslatableModel):
     translations = TranslatedFields(
@@ -87,20 +112,7 @@ class Faq(TranslatableModel):
     def __str__(self):
         return self.safe_translation_getter('question', any_language=True)
 
-class SubCategory(MPTTModel):
-    name = models.CharField(max_length=150)
-    parent = TreeForeignKey('self', on_delete=models.CASCADE, related_name='children', null=True, blank=True)
 
-    class MPTTMeta:
-        order_insertion_by = ['name']
 
-    class Meta:
-        indexes = [
-            models.Index(fields=['name']),
-        ]
-        verbose_name = "Category"
-        verbose_name_plural = "Categories"
 
-    def __str__(self):
-        return self.name
 

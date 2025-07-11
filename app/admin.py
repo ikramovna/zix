@@ -1,6 +1,8 @@
 from django.contrib import admin
+from django.utils.translation import gettext_lazy as _
 from import_export.admin import ImportExportModelAdmin
 from parler.admin import TranslatableAdmin
+
 from app.models import *
 
 
@@ -57,7 +59,7 @@ class ProductAdmin(ImportExportModelAdmin, TranslatableAdmin):
     fieldsets = (
         (None, {
             'fields': (
-                'name', 'description', 'features', 'category', 'image1', 'image2', 'image3', 'image4')
+                'name', 'description', 'features', 'category', 'image1', 'image2', 'image3', 'image4', 'subcategory')
         }),
     )
     search_fields = (
@@ -85,16 +87,17 @@ class FaqAdmin(ImportExportModelAdmin, TranslatableAdmin):
 
 admin.site.register(Faq, FaqAdmin)
 
-class SubCategoryAdmin(ImportExportModelAdmin):
-    list_display = ('id', 'name', 'parent')
-    fieldsets = (
-        (None, {
-            'fields': ('name', 'parent')
-        }),
-    )
-    search_fields = ('name', 'category__name')
-    ordering = ('id',)
-    readonly_fields = ('id',)
-    list_per_page = 10
+
+class SubCategoryAdmin(TranslatableAdmin):
+    list_display = ('get_name', 'parent')
+    search_fields = ('translations__name',)
+
+    fields = ('name', 'parent')
+
+    def get_name(self, obj):
+        return obj.safe_translation_getter('name', any_language=True)
+
+    get_name.short_description = _('Name')
+
 
 admin.site.register(SubCategory, SubCategoryAdmin)

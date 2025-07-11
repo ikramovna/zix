@@ -1,14 +1,13 @@
 from django.conf import settings
-from django.core.mail import send_mail, BadHeaderError
+from django.core.mail import send_mail
 from django.utils.translation import get_language
+from parler.utils.context import switch_language
 from rest_framework import status
 from rest_framework.generics import ListAPIView, CreateAPIView, RetrieveAPIView
 from rest_framework.response import Response
-from django.template.loader import render_to_string
 
 from app.serializers import *
 from root import settings
-from parler.utils.context import switch_language
 
 
 class ContactCreateAPIView(CreateAPIView):
@@ -111,7 +110,10 @@ class ProductListAPIView(RetrieveAPIView):
         language_code = self.kwargs.get('language_prefix') or get_language()
 
         with switch_language(instance, language_code):
-            serializer = self.get_serializer(instance, context={'language_code': language_code})
+            serializer = self.get_serializer(
+                instance,
+                context={'language_code': language_code, 'request': request}
+            )
             return Response(serializer.data)
 
 
@@ -151,4 +153,11 @@ class FaqListAPIView(ListAPIView):
 
 class SubCategoryListAPIView(ListAPIView):
     serializer_class = SubCategorySerializer
-    queryset = SubCategory.objects.all()
+
+    def get_queryset(self):
+        return SubCategory.objects.all()
+
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context['language_code'] = self.kwargs.get('language_prefix', get_language())
+        return context
