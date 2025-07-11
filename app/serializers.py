@@ -49,13 +49,11 @@ class ProductSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         representation = super().to_representation(instance)
-
         image_fields = ['image1', 'image2', 'image3', 'image4']
         images = [representation.pop(field) for field in image_fields if representation.get(field)]
-
         representation['images'] = images
-
         return representation
+
 
 class ProductListTranslatableModelSerializer(TranslatableModelSerializer):
     translations = TranslatedFieldsField(shared_model=Product)

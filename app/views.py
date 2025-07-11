@@ -8,6 +8,7 @@ from django.template.loader import render_to_string
 
 from app.serializers import *
 from root import settings
+from parler.utils.context import switch_language
 
 
 class ContactCreateAPIView(CreateAPIView):
@@ -76,6 +77,14 @@ class CategoryListAPIView(ListAPIView):
 class ProductListAPIView(RetrieveAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        language_code = self.kwargs.get('language_prefix') or get_language()
+
+        with switch_language(instance, language_code):
+            serializer = self.get_serializer(instance, context={'language_code': language_code})
+            return Response(serializer.data)
 
 
 class ProductList(ListAPIView):
