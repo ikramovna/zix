@@ -46,7 +46,7 @@ class CategoryAdmin(ImportExportModelAdmin):
     search_fields = ('name',)
     ordering = ('id',)
     readonly_fields = ('id',)
-    list_per_page = 10
+    list_per_page = 50
 
 
 admin.site.register(Category, CategoryAdmin)
@@ -64,7 +64,7 @@ class ProductAdmin(ImportExportModelAdmin, TranslatableAdmin):
         'translations__name', 'translations__description', 'translations__features', 'category__translations__name')
     ordering = ('id',)
     readonly_fields = ('id',)
-    list_per_page = 10
+    list_per_page = 50
 
 
 admin.site.register(Product, ProductAdmin)
@@ -84,3 +84,17 @@ class FaqAdmin(ImportExportModelAdmin, TranslatableAdmin):
 
 
 admin.site.register(Faq, FaqAdmin)
+
+class SubCategoryAdmin(ImportExportModelAdmin):
+    list_display = ('id', 'name', 'parent')
+    fieldsets = (
+        (None, {
+            'fields': ('name', 'parent')
+        }),
+    )
+    search_fields = ('name', 'category__name')
+    ordering = ('id',)
+    readonly_fields = ('id',)
+    list_per_page = 10
+
+admin.site.register(SubCategory, SubCategoryAdmin)

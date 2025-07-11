@@ -27,7 +27,7 @@ class ContactCreateAPIView(CreateAPIView):
         )
         subject = "New Contact Form Submission"
         from_email = settings.EMAIL_HOST_USER
-        recipient_list = ["muslimazokirjonova2004@gmail.com"]
+        recipient_list = ["zixxuzbekistan@gmail.com"]
 
         self.email_sent = False
 
@@ -47,6 +47,34 @@ class ContactCreateAPIView(CreateAPIView):
         response = super().create(request, *args, **kwargs)
         return Response({
             "message": "Contact saved successfully.",
+            "email_sent": getattr(self, 'email_sent', False),
+            "data": response.data
+        }, status=status.HTTP_201_CREATED)
+
+
+class TelegramSubmitAPIView(CreateAPIView):
+    queryset = Contact.objects.all()
+    serializer_class = TelegramSerializer
+
+    def perform_create(self, serializer):
+        contact = serializer.save()
+
+        subject = "New Telegram Submission"
+        message = f"New Telegram contact received:\n\nTelegram: {contact.telegram}"
+        from_email = settings.EMAIL_HOST_USER
+        recipient_list = ['zixxuzbekistan@gmail.com']
+
+        try:
+            send_mail(subject, message, from_email, recipient_list, fail_silently=False)
+            self.email_sent = True
+        except Exception as e:
+            print(f"Email sending failed: {e}")
+            self.email_sent = False
+
+    def create(self, request, *args, **kwargs):
+        response = super().create(request, *args, **kwargs)
+        return Response({
+            "message": "Telegram contact saved.",
             "email_sent": getattr(self, 'email_sent', False),
             "data": response.data
         }, status=status.HTTP_201_CREATED)
@@ -119,3 +147,8 @@ class FaqListAPIView(ListAPIView):
         context = super().get_serializer_context()
         context['language_code'] = self.kwargs.get('language_prefix', get_language())
         return context
+
+
+class SubCategoryListAPIView(ListAPIView):
+    serializer_class = SubCategorySerializer
+    queryset = SubCategory.objects.all()

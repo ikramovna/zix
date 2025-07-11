@@ -3,13 +3,15 @@ from django.db import models
 from django.db.models import Model
 from django.utils.translation import gettext as _
 from parler.models import TranslatableModel, TranslatedFields
-
+from django.db import models
+from mptt.models import MPTTModel, TreeForeignKey
 
 class Contact(Model):
     name = models.CharField(max_length=255)
     email = models.EmailField()
     country = models.CharField(max_length=255)
     message = models.TextField()
+    telegram = models.CharField(max_length=50, null=True, blank=True)
 
     class Meta:
         verbose_name = _("Contact")
@@ -41,8 +43,8 @@ class Category(models.Model):
     image = models.ImageField(upload_to='category/', null=True, blank=True)
 
     class Meta:
-        verbose_name = _("Category")
-        verbose_name_plural = _("Categories")
+        verbose_name = _("Brand")
+        verbose_name_plural = _("Brands")
         db_table = 'category'
 
     def __str__(self):
@@ -81,3 +83,24 @@ class Faq(TranslatableModel):
         verbose_name = _("FAQ")
         verbose_name_plural = _("FAQs")
         db_table = 'faq'
+
+    def __str__(self):
+        return self.safe_translation_getter('question', any_language=True)
+
+class SubCategory(MPTTModel):
+    name = models.CharField(max_length=150)
+    parent = TreeForeignKey('self', on_delete=models.CASCADE, related_name='children', null=True, blank=True)
+
+    class MPTTMeta:
+        order_insertion_by = ['name']
+
+    class Meta:
+        indexes = [
+            models.Index(fields=['name']),
+        ]
+        verbose_name = "Category"
+        verbose_name_plural = "Categories"
+
+    def __str__(self):
+        return self.name
+

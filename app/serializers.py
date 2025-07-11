@@ -4,12 +4,18 @@ from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
 from app.models import *
 
+from rest_framework import serializers
+from .models import SubCategory
 
 class ContactSerializer(ModelSerializer):
     class Meta:
         model = Contact
-        fields = '__all__'
+        fields = ('id', 'name', 'email', 'country', 'message')
 
+class TelegramSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Contact
+        fields = ('id', 'telegram')
 
 class AboutTranslatableModelSerializer(TranslatableModelSerializer):
     translations = TranslatedFieldsField(shared_model=About)
@@ -94,3 +100,17 @@ class FaqTranslatableModelSerializer(TranslatableModelSerializer):
                 language_code: representation['translations'].get(language_code)
             }
         return representation
+
+
+
+class SubCategorySerializer(serializers.ModelSerializer):
+    children = serializers.SerializerMethodField()
+
+    class Meta:
+        model = SubCategory
+        fields = ('id', 'name', 'parent', 'children')
+
+    def get_children(self, obj):
+        if obj.get_children():
+            return SubCategorySerializer(obj.get_children(), many=True).data
+        return None
