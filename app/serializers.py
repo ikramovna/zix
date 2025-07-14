@@ -1,3 +1,4 @@
+from parler.utils.context import switch_language
 from parler_rest.serializers import TranslatableModelSerializer, TranslatedFieldsField
 from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
@@ -77,10 +78,18 @@ class ProductSerializer(serializers.ModelSerializer):
 class ProductListTranslatableModelSerializer(TranslatableModelSerializer):
     translations = TranslatedFieldsField(shared_model=Product)
     category = serializers.CharField(source='category.name', read_only=True)
+    subcategory = serializers.SerializerMethodField()
 
     class Meta:
         model = Product
         fields = ('id', 'translations', 'name', 'description', 'image1', 'category', 'subcategory')
+
+    def get_subcategory(self, instance):
+        language_code = self.context.get('language_code')
+        if instance.subcategory:
+            with switch_language(instance.subcategory, language_code):
+                return instance.subcategory.safe_translation_getter('name', any_language=True)
+        return None
 
     def to_representation(self, instance):
         representation = super().to_representation(instance)
@@ -95,6 +104,7 @@ class ProductListTranslatableModelSerializer(TranslatableModelSerializer):
             "description": representation.get("description"),
             "image1": representation.get("image1"),
             "category": representation.get("category"),
+            "subcategory": representation.get("subcategory"),
         }
 
 
