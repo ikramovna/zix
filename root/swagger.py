@@ -5,7 +5,7 @@ from drf_yasg import openapi
 
 schema_view = get_schema_view(
     openapi.Info(
-        title="ZIXX API",
+        title="ZIX API",
         default_version='v1',
         description="**Created by Ikramovna**\n\n**ZIXX API Documentation**\n\n**Version 1.0**",
         terms_of_service="https://www.google.com/policies/terms/",
